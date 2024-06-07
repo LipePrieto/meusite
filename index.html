@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dicas de Segurança para Celular</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        .info-box {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Dicas de Segurança para Celular</h1>
+    <p>Você acessou este site usando:</p>
+    <div class="info-box">
+        <p id="browser-info"></p>
+        <p id="os-info"></p>
+        <p id="screen-info"></p>
+    </div>
+    <p>Seja cuidadoso ao escanear QR Codes desconhecidos. Eles podem levar a sites maliciosos ou roubar suas informações.</p>
+    <script>
+        // Função para detectar informações do usuário
+        function getUserInfo() {
+            const userAgent = navigator.userAgent;
+            const platform = navigator.platform;
+            const screenWidth = window.innerWidth;
+            const screenHeight = window.innerHeight;
+
+            // Exibindo informações na página
+            document.getElementById('browser-info').innerText = `Navegador: ${userAgent}`;
+            document.getElementById('os-info').innerText = `Sistema Operacional: ${platform}`;
+            document.getElementById('screen-info').innerText = `Resolução de Tela: ${screenWidth} x ${screenHeight}`;
+        }
+
+        // Chamada da função para exibir as informações
+        getUserInfo();
+    </script>
+</body>
+</html>
