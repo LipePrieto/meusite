@@ -1,51 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Get IP</title>
-    <!-- Scripts do Firebase -->
-    <script src="https://www.gstatic.com/firebasejs/9.0.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.0.1/firebase-database.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script>
-        // Configuração do Firebase
-        const firebaseConfig = {
-            apiKey: "AIzaSyBVBdpxnLULiBwvrhP2O7n8coC4ZAwHLXg",
-            authDomain: "tisenac2024noite.firebaseapp.com",
-            databaseURL: "https://tisenac2024noite-default-rtdb.firebaseio.com",
-            projectId: "tisenac2024noite",
-            storageBucket: "tisenac2024noite.appspot.com",
-            messagingSenderId: "562572451142",
-            appId: "1:562572451142:web:a50a2c855de85e0847d947"
-        };
+<script>
+    // Configurar o Firebase
+    const firebaseConfig = {
+        apiKey: "AIzaSyBVBdpxnLULiBwvrhP2O7n8coC4ZAwHLXg",
+        authDomain: "tisenac2024noite.firebaseapp.com",
+        databaseURL: "https://tisenac2024noite-default-rtdb.firebaseio.com",
+        projectId: "tisenac2024noite",
+        storageBucket: "tisenac2024noite.appspot.com",
+        messagingSenderId: "562572451142",
+        appId: "1:562572451142:web:a50a2c855de85e0847d947",
+        measurementId: "G-8Q1DEYXBM6"
+    };
 
-        // Inicializar o Firebase
-        firebase.initializeApp(firebaseConfig);
+    // Inicializar o Firebase
+    firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
 
-        // Referência do banco de dados do Firebase
-        const database = firebase.database();
+    $(document).ready(function(){
+        $("#getIPBtn").click(function(){
+            // Dados fixos que você deseja enviar para o Firebase
+            const dadosFixos = "Dados fixos para testar o Firebase";
+            
+            // Exibir os dados fixos no console para verificar
+            console.log("Dados fixos: " + dadosFixos);
 
-        $(document).ready(function(){
-            $("#getIPBtn").click(function(){
-                $.get("getip.php", function(data, status){
-                    $("#ipResult").html("Your IP Address is: " + data);
-                    console.log("Endereço IP obtido: " + data); // Adicionar console.log
-                    // Enviar o IP para o Firebase
-                    database.ref('ips').push({
-                        ip: data
-                    }).then(function() {
-                        console.log("IP enviado com sucesso para o Firebase!");
-                    }).catch(function(error) {
-                        console.error("Erro ao enviar IP para o Firebase: ", error);
-                    });
-                });
+            // Enviar os dados fixos para o Firebase
+            database.ref('ips').push({
+                ip: dadosFixos
+            }).then(function() {
+                console.log("Dados fixos enviados com sucesso para o Firebase!");
+            }).catch(function(error) {
+                console.error("Erro ao enviar dados fixos para o Firebase: ", error);
             });
         });
-    </script>
-</head>
-<body>
-    <button id="getIPBtn">Get My IP</button>
-    <div id="ipResult"></div>
-</body>
-</html>
+    });
+</script>
