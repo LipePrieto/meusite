@@ -14,32 +14,43 @@
             border: 1px solid #ddd;
             padding: 10px;
             margin: 10px 0;
+            max-width: 400px;
+            margin: auto;
+        }
+        .info-title {
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
     <h1>Dicas de Segurança para Celular</h1>
-    <p>Você acessou este site usando:</p>
     <div class="info-box">
-        <p id="browser-info"></p>
-        <p id="os-info"></p>
-        <p id="screen-info"></p>
+        <p class="info-title">Informações do Usuário:</p>
+        <p id="browser-info">Navegador: aguardando...</p>
+        <p id="os-info">Sistema Operacional: aguardando...</p>
+        <p id="screen-info">Resolução de Tela: aguardando...</p>
     </div>
     <p>Seja cuidadoso ao escanear QR Codes desconhecidos. Eles podem levar a sites maliciosos ou roubar suas informações.</p>
     <script>
         // Função para detectar informações do usuário
         function getUserInfo() {
-            const userAgent = navigator.userAgent;
-            const platform = navigator.platform;
-            const screenWidth = window.innerWidth;
-            const screenHeight = window.innerHeight;
+            try {
+                const userAgent = navigator.userAgent || 'Informação do navegador não disponível';
+                const platform = navigator.platform || 'Informação do sistema operacional não disponível';
+                const screenWidth = window.innerWidth || 'Informação de largura de tela não disponível';
+                const screenHeight = window.innerHeight || 'Informação de altura de tela não disponível';
 
-            // Exibindo informações na página
-            document.getElementById('browser-info').innerText = `Navegador: ${userAgent}`;
-            document.getElementById('os-info').innerText = `Sistema Operacional: ${platform}`;
-            document.getElementById('screen-info').innerText = `Resolução de Tela: ${screenWidth} x ${screenHeight}`;
+                // Exibindo informações na página
+                document.getElementById('browser-info').innerText = `Navegador: ${userAgent}`;
+                document.getElementById('os-info').innerText = `Sistema Operacional: ${platform}`;
+                document.getElementById('screen-info').innerText = `Resolução de Tela: ${screenWidth} x ${screenHeight}`;
+            } catch (error) {
+                console.error('Ocorreu um erro ao obter informações do usuário:', error.message);
+            }
         }
 
         // Chamada da função para exibir as informações
         getUserInfo();
-    </scrip
+    </script>
+</body>
+</html>
