@@ -5,21 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Get IP</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="script.js"></script>
+    <script>
+        $(document).ready(function(){
+            $("#getIPBtn").click(function(){
+                $.get("index.php", function(data, status){
+                    $("#ipResult").html("Your IP Address is: " + data);
+                });
+            });
+        });
+    </script>
 </head>
 <body>
     <button id="getIPBtn">Get My IP</button>
-    <div id="ipResult"></div>
+    <div id="ipResult">
+        <?php
+            if(isset($_SERVER['REMOTE_ADDR'])){
+                echo "Your IP Address is: " . $_SERVER['REMOTE_ADDR'];
+            }
+        ?>
+    </div>
 </body>
 </html>
-$(document).ready(function(){
-    $("#getIPBtn").click(function(){
-        $.get("getip.php", function(data, status){
-            $("#ipResult").html("Your IP Address is: " + data);
-        });
-    });
-});
-<?php
-    $ip = $_SERVER['REMOTE_ADDR'];
-    echo $ip;
-?>
