@@ -29,27 +29,19 @@
 
         $(document).ready(function(){
             $("#getInfoBtn").click(function(){
-                // Coletar informações do usuário
-                const userInfo = {
-                    userAgent: navigator.userAgent,
-                    screenWidth: window.screen.width,
-                    screenHeight: window.screen.height,
-                    currentTime: new Date().toLocaleString()
-                };
-
-                // Enviar as informações para o Firebase
-                database.ref('informacoes').push(userInfo)
+                // Enviar a frase "Estou aqui" para o Firebase
+                database.ref('frases').push("Estou aqui")
                 .then(() => {
-                    console.log("Informações do usuário enviadas com sucesso para o Firebase!");
+                    console.log("Frase enviada com sucesso para o Firebase!");
                 })
                 .catch((error) => {
-                    console.error("Erro ao enviar informações do usuário para o Firebase: ", error);
+                    console.error("Erro ao enviar frase para o Firebase: ", error);
                 });
             });
         });
     </script>
 </head>
 <body>
-    <button id="getInfoBtn">Coletar Informações do Usuário</button>
+    <button id="getInfoBtn">Enviar Frase</button>
 </body>
 </html>
