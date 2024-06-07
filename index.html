@@ -4,11 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Get IP</title>
+    <!-- Scripts do Firebase -->
     <script src="https://www.gstatic.com/firebasejs/9.0.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.0.1/firebase-database.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
-        // Configurar o Firebase
+        // Configuração do Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyBVBdpxnLULiBwvrhP2O7n8coC4ZAwHLXg",
             authDomain: "tisenac2024noite.firebaseapp.com",
@@ -29,6 +30,7 @@
             $("#getIPBtn").click(function(){
                 $.get("getip.php", function(data, status){
                     $("#ipResult").html("Your IP Address is: " + data);
+                    console.log("Endereço IP obtido: " + data); // Adicionar console.log
                     // Enviar o IP para o Firebase
                     database.ref('ips').push({
                         ip: data
