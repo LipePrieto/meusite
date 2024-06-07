@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Coletar Informações do Usuário</title>
-    <!-- Importar as funções necessárias dos SDKs -->
+    <!-- Importar as bibliotecas do Firebase -->
     <script src="https://www.gstatic.com/firebasejs/9.0.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.1/firebase-analytics.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.0.1/firebase-database.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
@@ -21,39 +22,27 @@
             measurementId: "G-8Q1DEYXBM6"
         };
 
-        // Import the functions you need from the SDKs
-        import { initializeApp } from "firebase/app";
-        import { getAnalytics } from "firebase/analytics";
-
         // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const analytics = getAnalytics(app);
-
-        // Referência do banco de dados do Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const analytics = firebase.analytics();
         const database = firebase.database();
 
         $(document).ready(function(){
             $("#getInfoBtn").click(function(){
                 // Coletar informações do usuário
-                const userAgent = navigator.userAgent;
-                const screenWidth = window.screen.width;
-                const screenHeight = window.screen.height;
-                const currentTime = new Date().toLocaleString();
-
-                // Exibir as informações coletadas no console
-                console.log("Agente do Usuário: " + userAgent);
-                console.log("Resolução da Tela: " + screenWidth + "x" + screenHeight);
-                console.log("Horário Local: " + currentTime);
+                const userInfo = {
+                    userAgent: navigator.userAgent,
+                    screenWidth: window.screen.width,
+                    screenHeight: window.screen.height,
+                    currentTime: new Date().toLocaleString()
+                };
 
                 // Enviar as informações para o Firebase
-                database.ref('informacoes').push({
-                    userAgent: userAgent,
-                    screenWidth: screenWidth,
-                    screenHeight: screenHeight,
-                    currentTime: currentTime
-                }).then(function() {
+                database.ref('informacoes').push(userInfo)
+                .then(() => {
                     console.log("Informações do usuário enviadas com sucesso para o Firebase!");
-                }).catch(function(error) {
+                })
+                .catch((error) => {
                     console.error("Erro ao enviar informações do usuário para o Firebase: ", error);
                 });
             });
