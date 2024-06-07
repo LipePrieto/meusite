@@ -6,7 +6,7 @@
     <title>Coletar Informações do Usuário</title>
     <!-- Importar as funções necessárias dos SDKs -->
     <script src="https://www.gstatic.com/firebasejs/9.0.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.0.1/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.1/firebase-database.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
         // Configuração do Firebase
@@ -21,9 +21,16 @@
             measurementId: "G-8Q1DEYXBM6"
         };
 
-        // Inicializar o Firebase
+        // Import the functions you need from the SDKs
+        import { initializeApp } from "firebase/app";
+        import { getAnalytics } from "firebase/analytics";
+
+        // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const analytics = getAnalytics(app);
+
+        // Referência do banco de dados do Firebase
+        const database = firebase.database();
 
         $(document).ready(function(){
             $("#getInfoBtn").click(function(){
