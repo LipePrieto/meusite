@@ -4,12 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Get IP</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.1/firebase-database.js"></script>
     <script>
+        // Initialize Firebase
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_AUTH_DOMAIN",
+            databaseURL: "YOUR_DATABASE_URL",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_STORAGE_BUCKET",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+
+        const database = firebase.database();
+
         $(document).ready(function(){
             $("#getIPBtn").click(function(){
-                $.get("index.php", function(data, status){
+                $.get("getip.php", function(data, status){
                     $("#ipResult").html("Your IP Address is: " + data);
+                    // Enviar o IP para o Firebase
+                    database.ref('ips').push({
+                        ip: data
+                    }).then(function() {
+                        console.log("IP enviado com sucesso para o Firebase!");
+                    }).catch(function(error) {
+                        console.error("Erro ao enviar IP para o Firebase: ", error);
+                    });
                 });
             });
         });
@@ -17,12 +41,6 @@
 </head>
 <body>
     <button id="getIPBtn">Get My IP</button>
-    <div id="ipResult">
-        <?php
-            if(isset($_SERVER['REMOTE_ADDR'])){
-                echo "Your IP Address is: " . $_SERVER['REMOTE_ADDR'];
-            }
-        ?>
-    </div>
+    <div id="ipResult"></div>
 </body>
 </html>
