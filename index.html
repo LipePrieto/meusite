@@ -1,36 +1,59 @@
-<script>
-    // Configurar o Firebase
-    const firebaseConfig = {
-        apiKey: "AIzaSyBVBdpxnLULiBwvrhP2O7n8coC4ZAwHLXg",
-        authDomain: "tisenac2024noite.firebaseapp.com",
-        databaseURL: "https://tisenac2024noite-default-rtdb.firebaseio.com",
-        projectId: "tisenac2024noite",
-        storageBucket: "tisenac2024noite.appspot.com",
-        messagingSenderId: "562572451142",
-        appId: "1:562572451142:web:a50a2c855de85e0847d947",
-        measurementId: "G-8Q1DEYXBM6"
-    };
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coletar Informações do Usuário</title>
+    <!-- Importar as funções necessárias dos SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.0.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.1/firebase-analytics.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        // Configuração do Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyBVBdpxnLULiBwvrhP2O7n8coC4ZAwHLXg",
+            authDomain: "tisenac2024noite.firebaseapp.com",
+            databaseURL: "https://tisenac2024noite-default-rtdb.firebaseio.com",
+            projectId: "tisenac2024noite",
+            storageBucket: "tisenac2024noite.appspot.com",
+            messagingSenderId: "562572451142",
+            appId: "1:562572451142:web:a50a2c855de85e0847d947",
+            measurementId: "G-8Q1DEYXBM6"
+        };
 
-    // Inicializar o Firebase
-    firebase.initializeApp(firebaseConfig);
-    const database = firebase.database();
+        // Inicializar o Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
 
-    $(document).ready(function(){
-        $("#getIPBtn").click(function(){
-            // Dados fixos que você deseja enviar para o Firebase
-            const dadosFixos = "Dados fixos para testar o Firebase";
-            
-            // Exibir os dados fixos no console para verificar
-            console.log("Dados fixos: " + dadosFixos);
+        $(document).ready(function(){
+            $("#getInfoBtn").click(function(){
+                // Coletar informações do usuário
+                const userAgent = navigator.userAgent;
+                const screenWidth = window.screen.width;
+                const screenHeight = window.screen.height;
+                const currentTime = new Date().toLocaleString();
 
-            // Enviar os dados fixos para o Firebase
-            database.ref('ips').push({
-                ip: dadosFixos
-            }).then(function() {
-                console.log("Dados fixos enviados com sucesso para o Firebase!");
-            }).catch(function(error) {
-                console.error("Erro ao enviar dados fixos para o Firebase: ", error);
+                // Exibir as informações coletadas no console
+                console.log("Agente do Usuário: " + userAgent);
+                console.log("Resolução da Tela: " + screenWidth + "x" + screenHeight);
+                console.log("Horário Local: " + currentTime);
+
+                // Enviar as informações para o Firebase
+                database.ref('informacoes').push({
+                    userAgent: userAgent,
+                    screenWidth: screenWidth,
+                    screenHeight: screenHeight,
+                    currentTime: currentTime
+                }).then(function() {
+                    console.log("Informações do usuário enviadas com sucesso para o Firebase!");
+                }).catch(function(error) {
+                    console.error("Erro ao enviar informações do usuário para o Firebase: ", error);
+                });
             });
         });
-    });
-</script>
+    </script>
+</head>
+<body>
+    <button id="getInfoBtn">Coletar Informações do Usuário</button>
+</body>
+</html>
